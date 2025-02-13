@@ -1,0 +1,29 @@
+services:
+  gm_app:
+    image: gm_app_image:1.0
+    build:
+      context: ./gm_app
+    container_name: gm_app_container
+    ports:
+      - '8585:8080'
+    volumes:
+      - .:/app
+    networks:
+      - gm_backend
+
+
+  angu_app:
+    image: angu_app_image:1.0
+    build:
+      context: ./frontend
+    container_name: angu_app_container
+    ports:
+      - '4200:80'
+    networks:
+      - gm_backend
+
+
+
+
+networks:
+  gm_backend:

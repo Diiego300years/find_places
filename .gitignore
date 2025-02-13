@@ -1,0 +1,9 @@
+# Foldery z zależnościami
+frontend/node_modules/
+frontend/.angular
+
+gm_app/app/__pycache__
+.idea
+hugging_face_api.py
+
+

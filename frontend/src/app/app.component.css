@@ -1,0 +1,38 @@
+:host {
+  --content-padding: 10px;
+}
+.nav {
+  display: flex;
+  align-items: center; /* Ustawia wszystkie elementy na tej samej wysokości */
+  height: 60px;
+  padding: var(--content-padding);
+  box-shadow: 0px 5px 25px var(--shadow-color);
+  justify-content: space-between;
+}
+.content {
+  padding: var(--content-padding);
+}
+
+.exam {
+  display: flex;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 10px;
+  /*border-radius: 5px;*/
+  /*box-shadow: 0px 5px 25px var(--shadow-color);*/
+}
+
+.exam:hover {
+  background-color: #e0e0e0;
+}
+
+/*.nav {*/
+/*  display: flex;*/
+/*  align-items: flex-start;*/
+/*}*/
+
+/*.exam{*/
+/*  display: inline-block;*/
+/*}*/
