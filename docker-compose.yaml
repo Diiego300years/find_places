@@ -18,11 +18,19 @@ services:
       context: ./frontend
     container_name: angu_app_container
     ports:
-      - '4200:80'
+      - '4200:4200'
     networks:
       - gm_backend
 
-
+  sample_api:
+    image: sample_api_image:1.0
+    build:
+      context: ./sample-api
+    container_name: sample-api_container
+    ports:
+      - '3000:3000'
+    networks:
+      - gm_backend
 
 
 networks:

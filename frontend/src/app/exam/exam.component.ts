@@ -11,7 +11,6 @@ import { ExamService } from '../exam.service';
       Exam works!
     </p>
     <button (click)="fetchData()">Pobierz dane</button>
-
     <p *ngIf="data">Dane z message mówią, że egzamin chyba zliczony: {{ data }}</p>
   `,
   styles: ``

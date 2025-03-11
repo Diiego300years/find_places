@@ -1,34 +1,17 @@
-# Użyj Node.js jako obrazu bazowego
-FROM node:18 AS build
+# Używamy obrazu Node (wersja alpine)
+FROM node:18-alpine
 
-# Ustaw katalog roboczy
+# Ustawiamy katalog roboczy w kontenerze
 WORKDIR /app
 
-# Skopiuj package.json i package-lock.json
-COPY ang-app/package*.json ./
+# Kopiujemy pliki package.json oraz package-lock.json (jeśli istnieje)
+COPY package*.json ./
 
-# Zainstaluj zależności
-RUN npm install
+# Instalujemy Angular CLI globalnie oraz zależności projektu
+RUN npm install -g @angular/cli && npm install
 
-# Skopiuj resztę aplikacji Angular
-#COPY ang-app/ ./
-#
-## Zbuduj aplikację Angular
-#RUN npm run build --prod
-#
-## Użyj nginx jako serwera statycznych plików
-#FROM nginx:alpine
-#
-## Usuń domyślną stronę NGINX
-#RUN rm -rf /usr/share/nginx/html/*
-#
-## Skopiuj zbudowaną aplikację Angular do katalogu NGINX
-#COPY --from=build /app/dist/ang-app /usr/share/nginx/html
-#
-## Otwórz port 80
-#EXPOSE 80
-#
-## Uruchom NGINX
-#CMD ["nginx", "-g", "daemon off;"]
+COPY . .
 
-EXPOSE 80
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]

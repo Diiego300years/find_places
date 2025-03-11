@@ -11,6 +11,7 @@ export class ExamService {
   constructor(private http: HttpClient) {}
 
   fetchData(): Observable<any> {
+
     return this.http.get(this.url) ?? {'message': 'no data'};
   }
 }

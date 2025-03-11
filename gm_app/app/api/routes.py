@@ -1,13 +1,12 @@
 from flask_restful import Resource
 from flask import request
 
-
 todos = {}
 
 class HelloWorld(Resource):
 
     def get(self):
-        return {"message": "Hello, world!"}
+        return {"message": "Tak, zaliczony"}
 
     def put(self, todo_id):
         todos[todo_id] = request.form['data']
