@@ -1,24 +1,24 @@
 {
   "search": {
     "pl": {
-      "message": "Tak, zaliczony",
-      "description": "Gratulacje, egzamin zdany!",
       "header": "Szukamy kontaktów!",
-      "copy": "Kopiuj",
+      "description": "Dane pomyślnie skopiowane:",
+      "copy_button": "Kopiuj",
+      "message_copy_button": "dane",
       "navigation": "Szukaj miejsca"
     },
     "en": {
-      "message": "Yes, passed",
-      "description": "Congratulations, you passed the exam!",
       "header": "Looking for contacts!",
-      "copy": "Copy",
+      "description": "Data copied successfully:",
+      "copy_button": "Copy",
+      "message_copy_button": "data",
       "navigation": "Search for a place"
     },
     "de": {
-      "message": "Wir suchen Kontakte!",
-      "description": "Herzlichen Glückwunsch, Sie haben die Prüfung bestanden!",
-      "header": "Szukamy kontaktów!",
-      "copy": "Kopie",
+      "header": "Kontakte gesucht!",
+      "description": "Daten erfolgreich kopiert:",
+      "copy_button": "Kopie",
+      "message_copy_button": "Daten",
       "navigation": "Suche nach einem Ort"
     }
   },

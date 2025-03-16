@@ -19,13 +19,7 @@ class SearchEndpoint(Resource):
         lang = request.accept_languages.best_match(['pl', 'en', 'de']) or 'pl'
 
         data = {
-            "page": {
-                "navigation": texts['search'][lang]["navigation"],
-                "header": texts['search'][lang]["header"],
-                "copy": texts['search'][lang]["copy"],
-            },
-            "message": texts['search'][lang]["message"],
-            "description": texts['search'][lang]["description"]
+            "message": "test"
         }
         return data, 200
 

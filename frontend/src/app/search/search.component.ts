@@ -10,11 +10,11 @@ import { TranslationService } from '../translation.service'; // Dodano Translati
   imports: [CommonModule],
   template: `
     <h1>
-      {{ translations['page.header'] || 'Domyślny nagłówek' }}
+<!--      {{ translations['header'] || 'Domyślny nagłówek' }}-->
     </h1>
-    <button (click)="fetchData()">{{ translations['page.copy'] || 'Domyślny tekst' }}</button>
+    <button (click)="fetchData()">{{ translations['copy_button'] || 'Kopiuj' }}</button>
     <p *ngIf="data">
-      Dane z message mówią, że egzamin chyba zliczony: {{ data?.message }}
+      {{translations['description'] || 'Dane pomyślnie skopiowane'}} {{ data?.message }}
     </p>
   `,
   styles: ``
