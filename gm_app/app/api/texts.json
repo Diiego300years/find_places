@@ -1,0 +1,51 @@
+{
+  "search": {
+    "pl": {
+      "header": "Szukamy kontaktów!",
+      "description": "Dane pomyślnie skopiowane:",
+      "copy_button": "Kopiuj",
+      "message_copy_button": "dane",
+      "navigation": "Szukaj miejsca"
+    },
+    "en": {
+      "header": "Looking for contacts!",
+      "description": "Data copied successfully:",
+      "copy_button": "Copy",
+      "message_copy_button": "data",
+      "navigation": "Search for a place"
+    },
+    "de": {
+      "header": "Kontakte gesucht!",
+      "description": "Daten erfolgreich kopiert:",
+      "copy_button": "Kopie",
+      "message_copy_button": "Daten",
+      "navigation": "Suche nach einem Ort"
+    }
+  },
+  "home": {
+    "pl": {
+      "header": "Witaj w wyszukiwarce miejsc",
+      "button_input": "Filtruj według miasta lub nazwy",
+      "search": "Szukaj",
+      "name": "Nazwa",
+      "city": "Miasto",
+      "navigation": "Szukaj miejsca"
+    },
+    "en": {
+      "header": "Welcome to the place finder",
+      "button_input": "Filter by city or name",
+      "search": "Search",
+      "name": "Name",
+      "city": "City",
+      "navigation": "Search place"
+    },
+    "de": {
+      "header": "Willkommen beim Ortsfinder",
+      "button_input": "Filtern nach Stadt oder Name",
+      "search": "suchen",
+      "name": "Name",
+      "city": "Stadt",
+      "navigation": "Ort suchen"
+    }
+  }
+}

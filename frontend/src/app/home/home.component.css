@@ -34,3 +34,15 @@ button {
       grid-template-columns: 1fr;
   }
 }
+
+select {
+  border: solid 2px var(--primary-color);
+  cursor: pointer; /* Ułatwienie interakcji */
+}
+
+/* Ujednolicenie zachowania na mniejszych ekranach */
+@media (min-width: 500px) and (max-width: 768px) {
+  select {
+      width: 70%;
+  }
+}
