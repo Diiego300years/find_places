@@ -7,10 +7,9 @@ services:
     ports:
       - '8585:8080'
     volumes:
-      - .:/app
+      - ./gm_app:/app
     networks:
       - gm_backend
-
 
   angu_app:
     image: angu_app_image:1.0
@@ -21,6 +20,9 @@ services:
       - '4200:4200'
     networks:
       - gm_backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   sample_api:
     image: sample_api_image:1.0

@@ -1,0 +1,3 @@
+# Wyklucz folder node_modules (instalujemy zależności w obrazie)
+node_modules/
+.angular

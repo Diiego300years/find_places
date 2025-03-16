@@ -1,0 +1,51 @@
+{
+  "search": {
+    "pl": {
+      "message": "Tak, zaliczony",
+      "description": "Gratulacje, egzamin zdany!",
+      "header": "Szukamy kontaktów!",
+      "copy": "Kopiuj",
+      "navigation": "Szukaj miejsca"
+    },
+    "en": {
+      "message": "Yes, passed",
+      "description": "Congratulations, you passed the exam!",
+      "header": "Looking for contacts!",
+      "copy": "Copy",
+      "navigation": "Search for a place"
+    },
+    "de": {
+      "message": "Wir suchen Kontakte!",
+      "description": "Herzlichen Glückwunsch, Sie haben die Prüfung bestanden!",
+      "header": "Szukamy kontaktów!",
+      "copy": "Kopie",
+      "navigation": "Suche nach einem Ort"
+    }
+  },
+  "home": {
+    "pl": {
+      "header": "Witaj w wyszukiwarce miejsc",
+      "button_input": "Filtruj według miasta lub nazwy",
+      "search": "Szukaj",
+      "name": "Nazwa",
+      "city": "Miasto",
+      "navigation": "Szukaj miejsca"
+    },
+    "en": {
+      "header": "Welcome to the place finder",
+      "button_input": "Filter by city or name",
+      "search": "Search",
+      "name": "Name",
+      "city": "City",
+      "navigation": "Search place"
+    },
+    "de": {
+      "header": "Willkommen beim Ortsfinder",
+      "button_input": "Filtern nach Stadt oder Name",
+      "search": "suchen",
+      "name": "Name",
+      "city": "Stadt",
+      "navigation": "Ort suchen"
+    }
+  }
+}

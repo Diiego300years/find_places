@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {DetailsComponent} from './details/details.component';
-import {ExamComponent} from "./exam/exam.component";
+import {SearchComponent} from "./search/search.component";
 
 const routeConfig: Routes = [
   {
@@ -15,9 +15,9 @@ const routeConfig: Routes = [
     title: 'Home details',
   },
   {
-    path: 'exam',
-    component: ExamComponent,
-    title: 'Exam component is here'
+    path: 'search',
+    component: SearchComponent,
+    title: 'search_engine'
   }
 ];
 export default routeConfig;

@@ -1,9 +1,5 @@
 # Wyklucz folder node_modules (instalujemy zależności w obrazie)
-frontend/node_modules/
-frontend/.angular
-
-gm_app/app/__pycache__
-.idea
+app/__pycache__
 hugging_face_api.py
 tmp/
-temp/
+app/.venv

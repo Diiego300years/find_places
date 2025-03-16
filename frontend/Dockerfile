@@ -1,7 +1,7 @@
 # Używamy obrazu Node (wersja alpine)
 FROM node:18-alpine
+LABEL authors="Marcin Buczak"
 
-# Ustawiamy katalog roboczy w kontenerze
 WORKDIR /app
 
 # Kopiujemy pliki package.json oraz package-lock.json (jeśli istnieje)
@@ -10,7 +10,7 @@ COPY package*.json ./
 # Instalujemy Angular CLI globalnie oraz zależności projektu
 RUN npm install -g @angular/cli && npm install
 
-COPY . .
+COPY . ./app
 
 EXPOSE 4200
 
