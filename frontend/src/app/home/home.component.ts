@@ -14,16 +14,21 @@ import {LanguageService} from "../language.service";
       <form class="d-flex align-items-center gap-2">
         <input 
             type="text" 
-            [placeholder]="translations['search'] || 'Search'" 
+            [placeholder]="(translations$ | async)?.['search'] || 'Search'"
+                
             #filter />
 
         <!-- Lista rozwijana do wyboru kryterium -->
         <select class="form-select w-auto" #filterOption>
-          <option value="city">{{ translations['city'] || 'City' }}</option>
-          <option value="name">{{ translations['name'] || 'Name' }}</option>
+          <option value="city">            
+            {{ (translations$ | async)?.['city'] || 'City' }}</option>
+          <option value="name">
+            {{ (translations$ | async)?.['name'] || 'Name' }}
+          </option>
         </select>
         <button class="primary" type="button" (click)="filterResults(filter.value, filterOption.value)">
-          {{ translations['search'] || 'Search' }}
+      {{ (translations$ | async)?.['search'] || 'Szukaj' }}
+          
         </button>
       </form>
     </section>
@@ -39,12 +44,12 @@ import {LanguageService} from "../language.service";
 })
 
 
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
   housingLocationList: HousingLocation[] = [];
   filteredHousingLocationList: HousingLocation[] = [];
 
-  translations: { [key: string]: string } = {};
+  translations$ = this.translationService.getTranslations();
 
   constructor(
       private translationService: TranslationService,
@@ -53,27 +58,6 @@ export class HomeComponent implements OnInit {
     this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
       this.housingLocationList = housingLocationList;
       this.filteredHousingLocationList = housingLocationList;
-    }
-    );
-  }
-
-  ngOnInit(): void {
-    // Load housing data
-    this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
-      this.housingLocationList = housingLocationList;
-      this.filteredHousingLocationList = housingLocationList;
-    });
-
-    // Load translations on component initialization
-    this.translationService.getTranslations().subscribe(translations => {
-        console.log(`✅ Received translations in HomeComponent: `, translations);
-      this.translations = translations;
-    });
-
-    // Reload translations when the language changes
-    this.languageService.currentLanguage$.subscribe(lang => {
-        console.log(`🌍 Language changed to: ${lang}`);
-      this.translationService.loadTranslations('home', lang); // Assuming 'home' is your API endpoint for translations
     });
   }
 
@@ -100,4 +84,3 @@ export class HomeComponent implements OnInit {
     );
   }
 }
-

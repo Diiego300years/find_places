@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { LanguageService } from './language.service';
 import { TranslationService } from './translation.service';
-import { filter } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -44,26 +45,22 @@ export class AppComponent {
     private languageService: LanguageService,
     private translationService: TranslationService,
     private router: Router
-
   ) {
-    // Subscribe to language changes and update translations
-    this.languageService.currentLanguage$.subscribe(lang => {
-
-      console.log(` Zaktualizowano język w languageService na: ${lang}`);
+    // Łączymy strumienie: zmiany języka oraz zmiany trasy
+    combineLatest([
+      this.languageService.currentLanguage$,
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd),
+        map((event: NavigationEnd) => event.urlAfterRedirects.split('/')[1] || '/')
+      )
+    ]).subscribe(([lang, page]) => {
       this.currentLanguage = lang;
-      this.translationService.loadTranslations(this.currentPage, lang);
+      this.currentPage = page;
+      // Wywołujemy zapytanie do backendu tylko raz przy nowej kombinacji język/trasa
+      this.translationService.loadTranslations(this.currentPage, this.currentLanguage);
     });
 
-
-    // Automatically load translations when the route changes
-    this.router.events
-        .pipe(filter(event => event instanceof NavigationEnd))
-        .subscribe((event: any) => {
-          this.currentPage = event.urlAfterRedirects.split('/')[1] || '/';
-          this.translationService.loadTranslations(this.currentPage, this.languageService.getCurrentLanguage());
-      });
-
-    // Subscribe to translation updates
+    // Subskrypcja na aktualizację tłumaczeń (możesz ją umieścić tutaj lub w osobnym komponencie)
     this.translationService.getTranslations().subscribe(translations => {
       this.translations = translations;
     });

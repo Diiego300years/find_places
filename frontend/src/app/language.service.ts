@@ -13,7 +13,7 @@ export class LanguageService {
    */
   changeLanguage(lang: 'pl' | 'en' | 'de'): void {
     console.log(`🌍 Changing language to: ${lang}`);
-    this.currentLanguageSubject.next(lang); // 🔥 Aktualizuje język
+    this.currentLanguageSubject.next(lang); //
   }
 
   /**

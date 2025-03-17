@@ -28,7 +28,8 @@ export class TranslationService {
         return of({});
       })
     ).subscribe(translations => {
-      console.log(`✅ Translations received: `, translations);
+      // is that subsvcribe good?
+      console.log(`TranslationsService received in TranslationService: `, translations);
       this.translations$.next(translations);
     });
   }
