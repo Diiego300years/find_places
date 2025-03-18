@@ -48,7 +48,6 @@ export class HomeComponent {
   readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
   housingLocationList: HousingLocation[] = [];
   filteredHousingLocationList: HousingLocation[] = [];
-
   translations$ = this.translationService.getTranslations();
 
   constructor(

@@ -24,7 +24,7 @@
   },
   "home": {
     "pl": {
-      "header": "Witaj w wyszukiwarce miejsc",
+      "header": "Dzień dobry! Poniższa lista mieszkań jest połączona z osobnego, wzorcowego API w innym kontenerze. To co czytasz, jest bezpośrednio z Flask i zawiera translacje.",
       "button_input": "Filtruj według miasta lub nazwy",
       "search": "Szukaj",
       "name": "Nazwa",
@@ -32,7 +32,7 @@
       "navigation": "Szukaj miejsca"
     },
     "en": {
-      "header": "Welcome to the place finder",
+      "header": "Good morning! The list of apartments below is linked from a separate, template API in another container. What you are reading is directly from Flask and includes translations.",
       "button_input": "Filter by city or name",
       "search": "Search",
       "name": "Name",
@@ -40,7 +40,7 @@
       "navigation": "Search place"
     },
     "de": {
-      "header": "Willkommen beim Ortsfinder",
+      "header": "Guten Morgen! Die unten stehende Liste der Apartments ist über eine separate Vorlagen-API in einem anderen Container verlinkt. Was Sie lesen, stammt direkt aus Flask und enthält Übersetzungen.",
       "button_input": "Filtern nach Stadt oder Name",
       "search": "suchen",
       "name": "Name",
