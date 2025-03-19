@@ -7,13 +7,8 @@ COPY app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
-#COPY config.py .
-#COPY wsgi.py .
-#COPY entrypoint.sh /entrypoint.sh
 
-RUN #chmod +x /entrypoint.sh
 EXPOSE 5000
 ENV PYTHONUNBUFFERED=1
-#ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["python", "gm_app/wsgi.py"]
+CMD ["python", "wsgi.py"]

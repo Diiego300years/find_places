@@ -1,0 +1,5 @@
+# Wyklucz folder node_modules (instalujemy zależności w obrazie)
+app/__pycache__
+hugging_face_api.py
+tmp/
+app/.venv

@@ -1,25 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingLocation } from '../housinglocation';
 import { HousingService } from '../housing.service';
+import {TranslationService} from "../translation.service";
+import {LanguageService} from "../language.service";
 
 @Component({
   selector: 'app-home',
   imports: [CommonModule, HousingLocationComponent],
   template: `
     <section>
-      <form>
-        <input type="text" placeholder="Filter by city or name" #filter />
+      <form class="d-flex align-items-center gap-2">
+        <input
+            type="text"
+            [placeholder]="(translations$ | async)?.['search'] || 'Search'"
+
+            #filter />
 
         <!-- Lista rozwijana do wyboru kryterium -->
-        <select #filterOption>
-          <option value="city">City</option>
-          <option value="name">Name</option>
+        <select class="form-select w-auto" #filterOption>
+          <option value="city">
+            {{ (translations$ | async)?.['city'] || 'City' }}</option>
+          <option value="name">
+            {{ (translations$ | async)?.['name'] || 'Name' }}
+          </option>
         </select>
-
         <button class="primary" type="button" (click)="filterResults(filter.value, filterOption.value)">
-          Search
+      {{ (translations$ | async)?.['search'] || 'Szukaj' }}
+
         </button>
       </form>
     </section>
@@ -40,14 +49,24 @@ export class HomeComponent {
   housingLocationList: HousingLocation[] = [];
   filteredHousingLocationList: HousingLocation[] = [];
 
-  constructor(private housingService: HousingService) {
+  translations$ = this.translationService.getTranslations();
+
+  constructor(
+      private translationService: TranslationService,
+      private languageService: LanguageService,
+      private housingService: HousingService) {
     this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
       this.housingLocationList = housingLocationList;
       this.filteredHousingLocationList = housingLocationList;
     });
-
   }
 
+    /**
+   * Filters the housing locations based on the provided criteria.
+   *
+   * @param searchText - The text entered in the search field.
+   * @param filterOption - The selected filter criteria ('city' or 'name').
+   */
   filterResults(searchText: string, filterOption: string): void {
     // trim can delete space or sth in text
     const trimmedText = searchText.trim().toLowerCase();
@@ -58,11 +77,10 @@ export class HomeComponent {
     }
 
     this.filteredHousingLocationList = this.housingLocationList.filter(
-      (housingLocation) =>
+      (housingLocation: HousingLocation) =>
         filterOption === 'city'
-          ? housingLocation?.city.toLowerCase().includes(trimmedText)
-          : housingLocation?.name.toLowerCase().includes(trimmedText)
+          ? housingLocation?.city?.toLowerCase().includes(trimmedText)
+          : housingLocation?.name?.toLowerCase().includes(trimmedText)
     );
   }
 }
-
