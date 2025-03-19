@@ -1,5 +1,4 @@
-# 🌍 Angular Translation System with Strong Typing
-
+# Angular and Flask Searching System.
 This project uses Angular, TS, Python, and Flask_RESTful to handle dynamic translations effectively. Here's a detailed explanation of the recent improvements and changes related to language handling.
 
 ---
