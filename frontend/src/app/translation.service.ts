@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
 import { environment } from '../environment';
+import { TranslationsInterface, LanguageInterface, SupportedLanguages } from '../app/types/search-data.model'
 
 
 @Injectable({
@@ -9,35 +10,43 @@ import { environment } from '../environment';
 })
 export class TranslationService {
   private apiUrl = environment.apiUrl;
-  // BehaviorSubject to store the latest translations
-  private translations$ = new BehaviorSubject<{ [key: string]: string }>({});
 
+  // BehaviorSubject to store the latest translations
+  private translations$: BehaviorSubject<TranslationsInterface | null> = new BehaviorSubject<TranslationsInterface | null>(null);
+  private availableLanguages: LanguageInterface = {
+    languages: ['pl', 'en', 'de']
+  };
 
   constructor(private http: HttpClient) {}
   /**
    * Fetch translations from the API based on the page and language.
    * Stores the result in the `translations$` BehaviorSubject.
    */
-  loadTranslations(page: string, lang: 'pl' | 'en' | 'de'): void {
+  loadTranslations(page: string, lang: SupportedLanguages): void {
+
+    if (!this.availableLanguages.languages.includes(lang as SupportedLanguages)) {
+      console.error(`❌ Error: Unsupported language '${lang}'`);
+      return;
+    }
+
     page = page === '/' ? 'home' : page;
     const url = `${this.apiUrl}/${page}/${lang}`;
 
-    this.http.get<{ [key: string]: string }>(url).pipe(
+    this.http.get<TranslationsInterface>(url).pipe(
       catchError(err  => {
         console.error(`Error loading translations for page '${page}' in language '${lang}':`, err);
-        return of({});
+        return of(null);
       })
     ).subscribe(translations => {
-      // is that subsvcribe good?
       console.log(`TranslationsService received in TranslationService: `, translations);
       this.translations$.next(translations);
     });
   }
 
   /**
-   * Get the latest translations as an observable.
+   * Get the latest translations as an observable for reactive updates.
    */
-  getTranslations(): Observable<{ [key: string]: string }> {
-    return this.translations$.asObservable();
+  getTranslations(): Observable<TranslationsInterface | null> {
+  return this.translations$.asObservable();
   }
 }

@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { LanguageService } from './language.service';
 import { TranslationService } from './translation.service';
-import { combineLatest } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
+import {LanguageInterface, TranslationsInterface, SupportedLanguages} from "./types/search-data.model";
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   template: `
     <main>
       <div class="nav">
@@ -22,13 +25,13 @@ import { filter, map } from 'rxjs/operators';
             {{ currentLanguage.toUpperCase() }}
           </button>
           <a [routerLink]="['search']" class="nav-link">
-            <header>{{ translations['navigation'] || 'Search place' }}</header>
+            <header> {{ (translations$ | async)?.['navigation']  || 'Search place' }}</header>
           </a>
         </div>
       </div>
 
       <section class="content">
-        <h1>{{ translations['header'] || 'Opis domyślny' }}</h1>
+        <h1>{{ (translations$ | async)?.['header']  || 'Opis domyślny' }}</h1>
         <router-outlet></router-outlet>
       </section>
     </main>
@@ -38,15 +41,19 @@ import { filter, map } from 'rxjs/operators';
 export class AppComponent {
   title = 'homes';
   currentLanguage: 'de' | 'en' | 'pl' = 'pl';
-  translations: { [key: string]: string } = {};
+  translations$: Observable<TranslationsInterface | null> = this.translationService.getTranslations();
+
+  // without async pipe
+  // translations: TranslationsInterface | null = null;
   currentPage: string = '/';
+  languages: LanguageInterface['languages'] = ['pl', 'en', 'de'];
 
   constructor(
     private languageService: LanguageService,
     private translationService: TranslationService,
     private router: Router
   ) {
-    // Łączymy strumienie: zmiany języka oraz zmiany trasy
+    // Connect stream: change language & rout
     combineLatest([
       this.languageService.currentLanguage$,
       this.router.events.pipe(
@@ -56,14 +63,14 @@ export class AppComponent {
     ]).subscribe(([lang, page]) => {
       this.currentLanguage = lang;
       this.currentPage = page;
-      // Wywołujemy zapytanie do backendu tylko raz przy nowej kombinacji język/trasa
+      // Ask backend once if new language-route connection
       this.translationService.loadTranslations(this.currentPage, this.currentLanguage);
     });
 
-    // Subskrypcja na aktualizację tłumaczeń (możesz ją umieścić tutaj lub w osobnym komponencie)
-    this.translationService.getTranslations().subscribe(translations => {
-      this.translations = translations;
-    });
+    // Subcribcion for translation actualization without async pipe
+    // this.translationService.getTranslations().subscribe(translations => {
+    //   this.translations = translations;
+    // });
   }
 
   /**
@@ -71,9 +78,11 @@ export class AppComponent {
    * Uses the `LanguageService` to trigger language updates.
    */
   toggleLanguage(): void {
-    const languages = ['pl', 'en', 'de'] as const;
-    const currentIndex = languages.indexOf(this.currentLanguage);
-    const newLanguage = languages[(currentIndex + 1) % languages.length];
-    this.languageService.changeLanguage(newLanguage);
+    this.languageService.currentLanguage$.pipe(
+    take(1) // Używamy `take(1)`, aby pobrać tylko jedną wartość z `currentLanguage$`.
+  ).subscribe(currentLang => {
+    const newLang: SupportedLanguages = this.languages[(this.languages.indexOf(currentLang) + 1) % this.languages.length];
+      this.languageService.changeLanguage(newLang);
+  });
   }
 }

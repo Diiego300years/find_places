@@ -15,18 +15,13 @@ except FileNotFoundError:
 
 class ContentEndpoint(Resource):
     def get(self, page, lang=None):
-        # Jeśli brak języka → użyj `Accept-Language` lub domyślnego 'pl'
         lang = lang or request.accept_languages.best_match(['pl', 'en', 'de']) or 'pl'
 
-        # Sprawdzenie czy istnieją dane dla danej strony
         if page not in texts:
             return {"error": "Strona nie istnieje"}, 404
 
-        # Sprawdzenie, czy dany język jest obsługiwany
         if lang not in texts[page]:
-            lang = 'pl'  # Domyślny język, jeśli brak tłumaczenia
-
-        # Zwrócenie danych
+            lang = 'pl'
         return texts[page][lang]
 
 

@@ -68,6 +68,10 @@ export class DetailsComponent {
     })
   }
 
+    /**
+   * Submits the application form data.
+   * Extracts the form values and sends them to the `HousingService`.
+   */
   submitApplication(){
     const firstName = this.applicationForm.value.firstName ?? '';
     const lastName = this.applicationForm.value.lastName ?? '';

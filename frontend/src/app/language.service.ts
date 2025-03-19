@@ -17,7 +17,7 @@ export class LanguageService {
   }
 
   /**
-   * Zwraca aktualny język (synchronnie)
+   * Synchronic version which is not for async
    */
   getCurrentLanguage(): 'pl' | 'en' | 'de' {
     return this.currentLanguageSubject.getValue();

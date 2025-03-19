@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {SearchDataModel} from '../app/types/search-data.model';
+// import {SearchDataModel} from '../app/types/search-data.model';
 import {environment} from "../environment";
 
 @Injectable({

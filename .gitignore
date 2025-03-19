@@ -7,3 +7,5 @@ gm_app/app/configuration/__pycache__/
 hugging_face_api.py
 tmp/
 temp/
+gm_app/app/__pycache__/
+gm_app/app/api/__pycache__/

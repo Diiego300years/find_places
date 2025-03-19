@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { SearchService } from '../search.service';
 import { LanguageService } from '../language.service';
 import { TranslationService } from '../translation.service';
+// import {SearchDataModel} from "../types/search-data.model";
+import { TranslationsInterface } from "../types/search-data.model";
+import { Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-exam',
@@ -19,16 +23,26 @@ import { TranslationService } from '../translation.service';
   styles: [``]
 })
 export class SearchComponent {
-  data: any;
-  // Tworzymy obserwowalny strumień tłumaczeń
-  translations$ = this.translationService.getTranslations();
+  // I should add interface here but there's coming messgae: test only
+  data: any
+  translations$: Observable<TranslationsInterface | null> = this.translationService.getTranslations();
 
+    /**
+   * Injects required services for data fetching, language switching, and translation handling.
+   * @param searchService - Handles data fetching logic
+   * @param languageService - Tracks the active language
+   * @param translationService - Provides translated content for the UI
+   */
   constructor(
     private searchService: SearchService,
     private languageService: LanguageService,
     private translationService: TranslationService
   ) {}
 
+   /**
+   * Fetches data from the `SearchService`.
+   * Updates the `data` property with the response from the API.
+   */
   fetchData(): void {
     this.searchService.fetchData().subscribe(response => {
       this.data = response;

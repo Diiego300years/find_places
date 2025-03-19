@@ -12,15 +12,15 @@ import {LanguageService} from "../language.service";
   template: `
     <section>
       <form class="d-flex align-items-center gap-2">
-        <input 
-            type="text" 
+        <input
+            type="text"
             [placeholder]="(translations$ | async)?.['search'] || 'Search'"
-                
+
             #filter />
 
         <!-- Lista rozwijana do wyboru kryterium -->
         <select class="form-select w-auto" #filterOption>
-          <option value="city">            
+          <option value="city">
             {{ (translations$ | async)?.['city'] || 'City' }}</option>
           <option value="name">
             {{ (translations$ | async)?.['name'] || 'Name' }}
@@ -28,7 +28,7 @@ import {LanguageService} from "../language.service";
         </select>
         <button class="primary" type="button" (click)="filterResults(filter.value, filterOption.value)">
       {{ (translations$ | async)?.['search'] || 'Szukaj' }}
-          
+
         </button>
       </form>
     </section>
