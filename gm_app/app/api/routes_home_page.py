@@ -4,7 +4,7 @@ from flask_restful import Resource, Api
 import os
 import json
 
-# 🔹 Dane przykładowe dla różnych stron i języków
+# Data to return
 file_path = os.path.join(os.path.dirname(__file__), 'texts.json')
 try:
     with open(file_path, encoding='utf-8') as file:
@@ -12,7 +12,9 @@ try:
 except FileNotFoundError:
     texts = {}
 
-
+# ------------------------------
+# Endpoint: /home - handle translations
+# ------------------------------
 class ContentEndpoint(Resource):
     def get(self, page, lang=None):
         lang = lang or request.accept_languages.best_match(['pl', 'en', 'de']) or 'pl'
@@ -25,6 +27,6 @@ class ContentEndpoint(Resource):
         return texts[page][lang]
 
 
-# 🔹 Dynamiczny endpoint: obsługuje `/home`, `/page`, `/about` + opcjonalnie `/pl`, `/en`, `/de`
+# Dynamic endpoint: handle `/home`, `/page`, `/about` + optional `/pl`, `/en`, `/de`
 api.add_resource(ContentEndpoint, '/<string:page>', '/<string:page>/<string:lang>')
 

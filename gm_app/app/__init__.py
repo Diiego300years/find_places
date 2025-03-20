@@ -5,6 +5,7 @@ from .api.routes_search_page import SearchEndpoint
 from flask_restful import Api
 from .api import api_bp
 from flask_cors import CORS
+from .celery_worker.tasks import celery_app
 
 # api = Api(api_bp)
 
@@ -21,5 +22,6 @@ def create_app(config_name):
     # api.add_resource(SearchEndpoint, '/search_page')
 
     # api.init_app(app)
+    celery_app.conf.update(app.config)
 
     return app
