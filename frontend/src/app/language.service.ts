@@ -12,7 +12,7 @@ export class LanguageService {
    * Zmiana języka i aktualizacja strumienia danych
    */
   changeLanguage(lang: 'pl' | 'en' | 'de'): void {
-    console.log(`🌍 Changing language to: ${lang}`);
+    console.log(`Changing language to: ${lang}`);
     this.currentLanguageSubject.next(lang); //
   }
 

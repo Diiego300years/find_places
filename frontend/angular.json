@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "first-app": {
+    "angu-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -41,7 +41,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/first-app",
+            "outputPath": "dist/angu-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -76,13 +76,16 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "liveReload": false
+          },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "first-app:build:production"
+              "buildTarget": "angu-app:build:production"
             },
             "development": {
-              "buildTarget": "first-app:build:development"
+              "buildTarget": "angu-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -90,7 +93,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "first-app:build"
+            "buildTarget": "angu-app:build"
           }
         }
       }

@@ -14,4 +14,6 @@ COPY . ./app
 
 EXPOSE 4200
 
+# for development
 CMD ["ng", "serve", "--host", "0.0.0.0"]
+#CMD ["ng", "build", "--configuration", "production"]

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
+import { environment } from "../environment";
 import {HousingLocation} from "./housinglocation";
-
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class HousingService {
-  readonly url: string = 'http://localhost:3000/locations';
+  private apiUrl: string = `${environment.sample_apiUrl}/locations`;
 
   async getAllHousingLocations(): Promise<HousingLocation[]> {
-    const data: Response = await fetch(this.url);
+    const data: Response = await fetch(this.apiUrl);
     return (await data.json()) ?? [];
   }
 
   async getHousingLocationById(id: number): Promise<HousingLocation | undefined> {
-    const data: Response = await fetch(`${this.url}/${id}`);
+    const data: Response = await fetch(`${this.apiUrl}/${id}`);
     return (await data.json()) ?? {};
   }
 

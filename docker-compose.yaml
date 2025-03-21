@@ -4,22 +4,8 @@ services:
     build:
       context: ./gm_app
     container_name: gm_app_container
-    ports:
-      - '8585:8080'
     volumes:
       - ./gm_app:/app
-    networks:
-      - gm_backend
-
-  celery_worker:
-    build:
-      context: ./gm_app
-    container_name: celery_worker_container
-    volumes:
-      - ./gm_app:/app
-    command: celery -A app.celery_worker.tasks worker --loglevel=info
-    depends_on:
-      - redis-server
     networks:
       - gm_backend
 
@@ -36,11 +22,21 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
+  celery_worker:
+    build:
+      context: ./gm_app
+    container_name: celery_worker_container
+    volumes:
+      - ./gm_app:/app
+    command: celery -A app.celery_worker.tasks worker --loglevel=info
+    depends_on:
+      - redis-server
+    networks:
+      - gm_backend
+
   redis-server:
     image: redis:7.0
     container_name: redis_server_container
-#    ports:
-#      - "6370:6379"
     restart: always
     networks:
       gm_backend:
@@ -51,12 +47,22 @@ services:
     build:
       context: ./sample-api
     container_name: sample-api_container
-    ports:
-      - '3000:3000'
     networks:
       - gm_backend
 
-
+  nginx:
+    image: nginx:1.21
+    container_name: nginx_container
+    ports:
+      - '9090:80'
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/dist/angu-app/browser:/usr/share/nginx/html/
+    depends_on:
+      - gm_app
+      - angu_app
+    networks:
+      - gm_backend
 
 networks:
   gm_backend:
