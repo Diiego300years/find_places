@@ -49,6 +49,13 @@ class DevelopmentConfigWithDocker(Config):
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
 
+    #Celery config
+    CELERY=dict(
+        broker="redis://redis-server:6379/0",
+        backend="redis://redis-server:6379/0",
+        task_ignore_result=False,
+    )
+
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')
 
 class TestingConfigWithDocker(Config):

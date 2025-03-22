@@ -9,3 +9,6 @@ tmp/
 temp/
 gm_app/app/__pycache__/
 gm_app/app/api/__pycache__/
+gm_app/app/.env
+
+
