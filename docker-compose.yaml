@@ -28,7 +28,7 @@ services:
     container_name: celery_worker_container
     volumes:
       - ./gm_app:/app
-    command: celery -A app.celery_worker.tasks worker --loglevel=info
+    command: celery -A wsgi.celery_app worker --loglevel=info
     depends_on:
       - redis-server
     networks:

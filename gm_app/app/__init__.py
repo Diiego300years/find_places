@@ -2,12 +2,10 @@ from flask import Flask
 import os
 from .configuration.config import config
 from .api.routes_search_page import SearchEndpoint
-from flask_restful import Api
 from .api import api_bp
 from flask_cors import CORS
-from .celery_worker.tasks import celery_app
+from .celery_worker import celery_init_app
 
-# api = Api(api_bp)
 
 # I decided to use several configuration sets
 def create_app(config_name):
@@ -17,11 +15,9 @@ def create_app(config_name):
     config[config_name].init_app(app)
     CORS(app)
 
+    # In Flask 3.x is app.config.from_prefixed_env() but I like config from object.
+
     app.register_blueprint(api_bp, url_prefix='/api_v1')
-
-    # api.add_resource(SearchEndpoint, '/search_page')
-
-    # api.init_app(app)
-    celery_app.conf.update(app.config)
+    celery_init_app(app)
 
     return app

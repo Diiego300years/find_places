@@ -8,7 +8,8 @@ hugging_face_api.py
 tmp/
 temp/
 gm_app/app/__pycache__/
+gm_app/app/celery_worker/__pycache__/
 gm_app/app/api/__pycache__/
 gm_app/app/.env
-
+gm_app/__pycache__/
 

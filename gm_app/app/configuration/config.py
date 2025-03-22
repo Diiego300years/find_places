@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
+import subprocess
 
-load_dotenv(os.path.join(os.getcwd(), '.env'))
-
+load_dotenv(os.path.join(os.getcwd(), './app/.env'))
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
@@ -48,12 +48,24 @@ class DevelopmentConfigWithDocker(Config):
     FLASK_ENV = 'default'
     FLASK_DEBUG = os.environ.get('FLASK_DEBUG')
     FLASK_APP = os.environ.get('FLASK_APP')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
     #Celery config
-    CELERY=dict(
-        broker="redis://redis-server:6379/0",
-        backend="redis://redis-server:6379/0",
-        task_ignore_result=False,
+    CELERY = dict(
+        broker_url=os.environ.get('CELERY_BROKER_URL'),
+        result_backend=os.environ.get('CELERY_RESULT_BACKEND'),
+        result_expires=3600,
+        task_track_started=True,
+        broker_connection_retry_on_startup=True,
+        # accept_content=['json'],
+        # result_accept_content=['json'],
+        # task_serializer='json',
+        # response_serializer='json',
+        task_store_eager_result=True,
+        #below is in seconds. soft cuz of better error handling
+        task_time_limit=10,
+        task_soft_time_limit=10,
+
     )
 
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DOCKER_DEV_DATABASE_URL')

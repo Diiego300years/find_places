@@ -4,15 +4,20 @@ import os, sys
 from flask import request
 
 sys.path.append(os.getcwd())
+print("Aktualny katalog roboczy:", os.getcwd())
 
 load_dotenv()
 
 application = create_app(config_name='default')
+# celery_app = application.extensions["celery"]
+celery_app = application.extensions["celery"]
+
+print(application.config)
 
 
 @application.before_request
 def log_request_info():
-    print(f"📄 Żądanie: {request.method} {request.path}")
+    print(f"Żądanie: {request.method} {request.path}")
 
 @application.cli.command()
 def test():

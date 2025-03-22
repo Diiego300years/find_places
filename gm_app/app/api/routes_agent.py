@@ -1,7 +1,7 @@
 import json
 from flask import request
 from flask_restful import Resource
-from ..celery_worker.tasks import make_request, celery_app
+from ..celery_worker.tasks import make_request
 from celery.result import AsyncResult
 import logging
 from . import api, redis_client
@@ -15,6 +15,7 @@ class SendRequest(Resource):
         urls = data.get('urls')
         if urls and isinstance(urls, list):
             task = make_request.delay(urls)
+
             return {'task_id': task.id}, 202
         return {'error': 'URL is required'}, 400
 
@@ -24,15 +25,15 @@ class SendRequest(Resource):
 class StatusRequest(Resource):
     def get(self, task_id):
         def on_message(body):
-            logging.info(f"Postęp zadania: {body}")
+            logging.info(f"Postęp/status zadania: {body}")
             return {'status': body['status']}
 
-        task = AsyncResult(task_id, app=celery_app)
+        task = AsyncResult(task_id)
         logging.info(f"Status zadania {task_id}: {task.state}")
         logging.info(f"Task info: {task.info}")
 
         try:
-            task.get(timeout=0.5, on_message=on_message)
+            task.get(timeout=10, on_message=on_message)
         except TimeoutError:
             logging.info(f"Timeout: Zadanie {task_id} jeszcze trwa.")
             return {'status': 'STARTED'}
@@ -44,12 +45,16 @@ class StatusRequest(Resource):
 # ------------------------------
 class ResultRequest(Resource):
     def get(self, task_id):
-        task = AsyncResult(task_id, app=celery_app)
-        logging.info(f"Wynik zadania {task_id}: {task.result}")
-        logging.info(f"Task info: {task.info}")
+        print("działa?")
+        task = AsyncResult(task_id)
+        # logging.info(f"Task info: {task.info}")
+        logging.info(f"WYNIK ZADANIA {task_id}: {task.state}")
+        # logging.info(f"Task info: {task.info}")
         if task.state == 'SUCCESS':
             result = task.result
             return {'result': result}
+        else:
+            return {'error': task.state}, 500
         return {'status': task.state}
 
 # ------------------------------
@@ -58,15 +63,20 @@ class ResultRequest(Resource):
 class AllResultsRequest(Resource):
     def get(self):
         task_keys = redis_client.keys("celery-task-meta-*")
+        print("coś", task_keys)
 
         results = []
         for key in task_keys:
             task_info = redis_client.get(key)
             if task_info:
-                task_data = json.loads(task_info)
-                results.append(task_data)
-
+                try:
+                    # 🔹 Usuń .decode(), ponieważ `task_info` jest już str
+                    task_data = json.loads(task_info)
+                    results.append(task_data)
+                except json.JSONDecodeError:
+                    logging.error(f"Nie udało się odczytać danych dla klucza: {key}")
         return results
+
 
 
 # ------------------------------
